@@ -43,7 +43,7 @@ function Header(): JSX.Element {
           </label>
           <input type="checkbox" id="checkbox" className="peer hidden" />
 
-          <div className="hidden w-full peer-checked:absolute peer-checked:left-0 peer-checked:top-11 peer-checked:block lg:flex lg:justify-end lg:gap-2 lg:peer-checked:static lg:peer-checked:flex">
+          <div className="absolute left-full top-11 w-3/4 transition-all peer-checked:left-1/4 peer-checked:top-11 md:w-1/3 md:peer-checked:left-2/3 lg:static lg:flex lg:w-auto lg:justify-end lg:gap-2 lg:peer-checked:static lg:peer-checked:flex">
             <Link
               className="block w-full bg-green-200 p-1 text-center text-sm font-bold text-green-600 transition hover:bg-green-400 hover:text-green-100 lg:inline-block lg:w-32 lg:rounded lg:text-center"
               href="/submit-vehicle"
