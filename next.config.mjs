@@ -18,6 +18,9 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  images: {
+    domains: ["images.unsplash.com", "cdn.discordapp.com"],
+  },
 };
 
 export default config;

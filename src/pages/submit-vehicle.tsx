@@ -1,5 +1,6 @@
 import type { FormEvent } from "react";
 import Head from "next/head";
+import { useSession } from "next-auth/react";
 
 interface FormElements extends HTMLFormControlsCollection {
   make: HTMLInputElement;
@@ -20,13 +21,6 @@ function validateForm(e: FormEvent<Form>): void {
   const miles: string = e.currentTarget.elements.miles.value;
   const description: string = e.currentTarget.elements.description.value;
 
-  /*function validateForm(e: FormEvent<FormElements>): void {
-  const make: string = document.forms["submit"].make.value;
-  const model: string = document.forms["submit"].model.value;
-  const year: string = document.forms["submit"].year.value;
-  const miles: string = document.forms["submit"].miles.value;
-  const description: string = document.forms["submit"].description.value;
-*/
   if (
     make == "" ||
     model == "" ||
@@ -40,6 +34,18 @@ function validateForm(e: FormEvent<Form>): void {
 }
 
 function SubmitVehicle() {
+  const { data: session, status } = useSession({
+    required: true,
+  });
+
+  if (session) {
+    console.log(session);
+  }
+
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className=".container m-auto mt-12 flex max-w-5xl flex-col px-2">
       <Head>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import { useSession, signOut } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
+import { useEffect, useRef } from "react";
 
 function Header(): JSX.Element {
   const { data: session } = useSession();
@@ -8,13 +9,36 @@ function Header(): JSX.Element {
   const userImg =
     session?.user.image ??
     "/images/default-profile-picture-avatar-png-green.png";
+  const ref = useRef<HTMLLabelElement>(null);
+
+  useEffect(() => {
+    /**
+     * Handles click outside of the component.
+     * If the click is outside of the component and the checkbox is checked, it will click the component.
+     * @param event - The MouseEvent object.
+     */
+    function handleClickOutside(event: MouseEvent) {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        const checkbox = document.getElementById(
+          "checkbox"
+        ) as HTMLInputElement;
+        if (checkbox?.checked) ref.current.click();
+      }
+    }
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [ref]);
 
   return (
     <div className="fixed left-0 top-0 z-50 w-full bg-green-600 p-2">
       <div className="m-auto max-w-5xl">
         {/*<Image src='/images/logo.jpg' alt='Logo' width={70} height={50} />*/}
         <nav id="" className="flex justify-end">
-          <label htmlFor="checkbox" className="py-0.5 lg:hidden">
+          <label ref={ref} htmlFor="checkbox" className="py-0.5 lg:hidden">
             &#9776;
           </label>
           <input type="checkbox" id="checkbox" className="peer hidden" />
@@ -45,36 +69,61 @@ function Header(): JSX.Element {
               Contact
             </Link>
             {!user && (
-              <Link
+              <button
                 className="block w-full bg-green-200 p-1 text-center text-sm font-bold text-green-600 transition hover:bg-green-400 hover:text-green-100 lg:inline-block lg:w-32 lg:rounded lg:text-center"
-                href="/auth/sign-in"
+                onClick={() => void signIn()}
               >
                 Sign in
-              </Link>
+              </button>
             )}
           </div>
 
           {user && (
-            <Link href="/account/profile" legacyBehavior passHref>
-              <a className="">
-                <Image
-                  className="profile-image"
-                  src={userImg}
-                  width={35}
-                  height={35}
-                  alt="profile image"
-                  style={{ borderRadius: "50%" }}
-                />
-                <div className="">
-                  <Link href="/account/profile">Profile</Link>
-                  <Link href="/account/notifications">Notifications</Link>
-                  <Link href="/account/listings">My Listings</Link>
-                  <Link href="/account/bids-and-wins">My Bids & Wins</Link>
-                  <Link href="/account/shipments">My Shipments</Link>
-                  <button onClick={() => void signOut()}>Sign Out</button>
-                </div>
-              </a>
-            </Link>
+            <div className="group ml-2 flex items-center justify-center">
+              <Image
+                className="profile-image rounded-md object-cover"
+                src={userImg}
+                width={28}
+                height={28}
+                alt="profile image"
+              />
+
+              <div className="absolute right-0 top-12 hidden border-t border-green-950 bg-green-200 group-hover:block">
+                <Link
+                  className="block px-2 text-green-900 transition hover:bg-green-400"
+                  href="/account/profile"
+                >
+                  Profile
+                </Link>
+                <Link
+                  className="block px-2 text-green-900 transition hover:bg-green-400"
+                  href="/account/notifications"
+                >
+                  Notifications
+                </Link>
+                <Link
+                  className="block px-2 text-green-900 transition hover:bg-green-400"
+                  href="/account/listings"
+                >
+                  My Listings
+                </Link>
+                <Link
+                  className="block px-2 text-green-900 transition hover:bg-green-400"
+                  href="/account/bids-and-wins"
+                >
+                  My Bids & Wins
+                </Link>
+                <Link
+                  className="block px-2 text-green-900 transition hover:bg-green-400"
+                  href="/account/shipments"
+                >
+                  My Shipments
+                </Link>
+                <button className="p-2 " onClick={() => void signOut()}>
+                  Sign Out
+                </button>
+              </div>
+            </div>
           )}
         </nav>
       </div>
