@@ -94,7 +94,7 @@ import { api } from "~/utils/api";
  */
 
 export default function Home(): JSX.Element {
-  const cars = api.example.getAll.useQuery();
+  const cars = api.example.getVehicles.useQuery();
   console.log(cars.data);
   return (
     <div className="m-auto mt-11 flex max-w-5xl bg-gray-200 pl-10 pr-8">
@@ -126,18 +126,18 @@ export default function Home(): JSX.Element {
   );
 }
 
-interface Vehicle {
+/*interface Vehicle {
   id: string;
   year: string;
   make: string;
   model: string;
   miles: string;
   description: string;
-  /*
+  
   price: number;
-  image: string;*/
+  image: string;
 }
-/*
+
 export async function getServerSideProps(): Promise<{ props: { vehicles: Vehicle[] } }> {
   const prisma = new PrismaClient();
   const vehicles: Vehicle[] = await prisma.vehicle.findMany();

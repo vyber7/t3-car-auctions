@@ -144,7 +144,7 @@ function Header(): JSX.Element {
           <div className="absolute right-full top-0 flex h-screen w-3/4 flex-col rounded-r-lg border-2 border-black bg-green-200 p-2 transition-all peer-checked:right-1/4 peer-checked:top-0 md:w-1/3 md:peer-checked:right-2/3 lg:static lg:flex lg:w-auto lg:justify-end lg:gap-2 lg:peer-checked:static lg:peer-checked:flex">
             {user && (
               <div>
-                <label htmlFor="profile-box" className="flex gap-2">
+                <label htmlFor="profile-box" className="flex gap-2 ">
                   <Image
                     className="profile-image rounded-md object-cover"
                     src={userImg}
@@ -152,16 +152,16 @@ function Header(): JSX.Element {
                     height={28}
                     alt="profile image"
                   />
-                  <span className=" p-1 align-text-bottom text-sm font-bold text-green-500 ">
+                  <span className=" p-1 align-text-bottom text-sm font-bold text-green-600 ">
                     {user.email}
                   </span>
                 </label>
-
+                <hr className="mb-2 mt-3 border-green-900" />
                 {profileLinks.map((link) => (
                   <Link
                     href={link.href as Url}
                     key={link.name}
-                    className="block w-full bg-green-200 p-2 text-left text-sm font-bold text-green-600 transition hover:bg-green-400 hover:text-green-100 lg:inline-block lg:w-32 lg:rounded lg:p-1 lg:text-center"
+                    className="block w-full rounded bg-green-200 p-2 text-left text-sm font-bold text-green-600 transition hover:bg-green-400 hover:text-green-100 lg:inline-block lg:w-32 lg:rounded lg:p-1 lg:text-center"
                   >
                     {link.name}
                   </Link>
@@ -169,6 +169,7 @@ function Header(): JSX.Element {
               </div>
             )}
             <div>
+              {user && <hr className="mb-2 mt-2 border-green-900" />}
               {navLinks.map((link) => (
                 <Link
                   href={link.href as Url}
