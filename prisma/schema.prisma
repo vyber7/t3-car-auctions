@@ -71,9 +71,10 @@ model VerificationToken {
 
 model Vehicle {
     id          String @id @default(cuid())
-    year        String
+    year        Int
     make        String
     model       String
-    miles       String
+    miles       Int
+    price       Int
     description String @db.Text
 }

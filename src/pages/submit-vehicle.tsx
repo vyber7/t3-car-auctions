@@ -7,6 +7,7 @@ interface FormElements extends HTMLFormControlsCollection {
   model: HTMLInputElement;
   year: HTMLInputElement;
   miles: HTMLInputElement;
+  price: HTMLInputElement;
   description: HTMLTextAreaElement;
 }
 
@@ -17,16 +18,19 @@ interface Form extends HTMLFormElement {
 function validateForm(e: FormEvent<Form>): void {
   const make: string = e.currentTarget.elements.make.value;
   const model: string = e.currentTarget.elements.model.value;
-  const year: string = e.currentTarget.elements.year.value;
-  const miles: string = e.currentTarget.elements.miles.value;
   const description: string = e.currentTarget.elements.description.value;
 
+  const year: number = parseInt(e.currentTarget.elements.year.value);
+  const miles: number = parseInt(e.currentTarget.elements.miles.value);
+  const price: number = parseInt(e.currentTarget.elements.price.value);
+
   if (
-    make == "" ||
-    model == "" ||
-    year == "" ||
-    miles == "" ||
-    description == ""
+    make === "" ||
+    model === "" ||
+    year === null ||
+    miles === null ||
+    price === null ||
+    description === ""
   ) {
     alert("Enter missing info!");
     e.preventDefault();
@@ -87,7 +91,7 @@ function SubmitVehicle() {
           </label>
           <input
             className="mb-5 h-8 w-52 rounded border"
-            type="text"
+            type="number"
             id="year"
             name="year"
           />
@@ -97,9 +101,19 @@ function SubmitVehicle() {
           </label>
           <input
             className="mb-5 h-8 w-52 rounded border"
-            type="text"
+            type="number"
             id="miles"
             name="miles"
+          />
+
+          <label className="w-52 pb-3" htmlFor="price">
+            Price
+          </label>
+          <input
+            className="mb-5 h-8 w-52 rounded border"
+            type="number"
+            id="price"
+            name="price"
           />
 
           <label className="w-52 pb-3" htmlFor="description">

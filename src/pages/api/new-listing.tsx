@@ -5,20 +5,33 @@ const prisma = new PrismaClient();
 
 async function NewListing(req: NextApiRequest, res: NextApiResponse) {
   interface Vehicle {
-    year: string;
+    year: number;
     make: string;
     model: string;
-    miles: string;
+    miles: number;
+    price: number;
     description: string;
   }
 
-  const vehicle: Vehicle = req.body as Vehicle;
+  const body = req.body as Vehicle;
+
+  const vehicle: Vehicle = {
+    year: body.year,
+    make: body.make,
+    model: body.model,
+    miles: body.miles,
+    price: body.price,
+    description: body.description,
+  };
+
+  console.log(vehicle);
 
   await prisma.vehicle.create({
     data: {
       year: vehicle.year,
       make: vehicle.make,
       model: vehicle.model,
+      price: vehicle.price,
       miles: vehicle.miles,
       description: vehicle.description,
     },
