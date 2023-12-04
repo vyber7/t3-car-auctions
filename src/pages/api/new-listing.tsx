@@ -24,8 +24,6 @@ async function NewListing(req: NextApiRequest, res: NextApiResponse) {
     description: body.description,
   };
 
-  console.log(vehicle);
-
   await prisma.vehicle.create({
     data: {
       year: vehicle.year,

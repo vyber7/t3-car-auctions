@@ -111,8 +111,8 @@ export default function Home(): JSX.Element {
             <ul>
               {cars.data.map((car) => (
                 <li className="mb-2" key={car.id}>
-                  <div className="flex rounded border border-gray-300 transition-all hover:bg-gray-300">
-                    <div className="flex w-1/3 flex-col">
+                  <div className="group flex rounded border border-gray-300 transition-all hover:bg-gray-300">
+                    <div className="flex w-1/3 flex-col bg-white">
                       <Image
                         src="/images/default-car-image.png"
                         alt="Car Image"
@@ -122,11 +122,16 @@ export default function Home(): JSX.Element {
                       <p>{car.miles} miles</p>
                       <p>${car.price}</p>
                     </div>
-                    <div className="flex w-2/3 flex-col">
-                      <h3>
+                    <div className="flex w-2/3 flex-col p-3">
+                      <h3 className="font-bold">
                         {car.year} {car.make} {car.model}
                       </h3>
-                      <p className="">{car.description}</p>
+                      <p className="relative h-24 overflow-hidden after:absolute after:bottom-0 after:right-14 after:h-6 after:w-1/2 after:bg-gradient-to-l after:from-gray-200 group-hover:after:from-gray-300">
+                        {car.description}
+                        <button className="absolute bottom-0 right-0 z-50 bg-gray-200 px-2 text-green-800">
+                          more...
+                        </button>
+                      </p>
                     </div>
                   </div>
                 </li>
@@ -145,7 +150,21 @@ export default function Home(): JSX.Element {
   );
 }
 
-/*interface Vehicle {
+/*
+
+p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+
+
+
+
+
+interface Vehicle {
   id: string;
   year: string;
   make: string;
