@@ -104,29 +104,32 @@ export default function Home(): JSX.Element {
         <link rel="icon" href="/images/logo.png" />
       </Head>
 
-      <main className="w-3/4">
+      <main className="md:w-3/4">
         <h2>Featured Auctions</h2>
         <div>
           {cars.data ? (
-            <ul>
+            <ul className="flex flex-col gap-3 py-3">
               {cars.data.map((car) => (
-                <li className="mb-2" key={car.id}>
-                  <div className="group flex rounded border border-gray-300 transition-all hover:bg-gray-300">
-                    <div className="flex w-1/3 flex-col bg-white">
+                <li className="" key={car.id}>
+                  <div className="group flex flex-col flex-wrap rounded border border-gray-300 transition-all hover:border-gray-600 hover:bg-gray-300 md:flex-row">
+                    <h3 className="w-full text-center font-bold">
+                      {car.year} {car.make} {car.model}
+                    </h3>
+                    <div className="flex w-auto flex-col rounded-t md:w-1/3 md:rounded-l">
                       <Image
                         src="/images/default-car-image.png"
                         alt="Car Image"
                         width={400}
                         height={200}
+                        className="w-auto rounded-t md:rounded-t-none md:rounded-tl"
                       />
-                      <p>{car.miles} miles</p>
-                      <p>${car.price}</p>
+                      <p className="flex justify-between">
+                        <span>{car.miles} miles</span>
+                        <span>${car.price}</span>
+                      </p>
                     </div>
-                    <div className="flex w-2/3 flex-col p-3">
-                      <h3 className="font-bold">
-                        {car.year} {car.make} {car.model}
-                      </h3>
-                      <p className="relative h-24 overflow-hidden after:absolute after:bottom-0 after:right-14 after:h-6 after:w-1/2 after:bg-gradient-to-l after:from-gray-200 group-hover:after:from-gray-300">
+                    <div className="px-3 pb-3 md:w-2/3">
+                      <p className="relative h-32 overflow-hidden after:absolute after:bottom-0 after:right-14 after:h-6 after:w-1/2 after:bg-gradient-to-l after:from-gray-200 group-hover:after:from-gray-300">
                         {car.description}
                         <button className="absolute bottom-0 right-0 z-50 bg-gray-200 px-2 text-green-800">
                           more...
@@ -142,9 +145,28 @@ export default function Home(): JSX.Element {
           )}
         </div>
       </main>
-      <aside className="w-1/4">
+      <aside className="hidden md:block md:w-1/4">
         <h2>Current Auctions</h2>
-        <div className="current_auctions"></div>
+        <div className="current_auctions">
+          {cars.data ? (
+            <ul className="flex flex-wrap">
+              {cars.data.map((car) => (
+                <li className="w-1/2" key={car.id}>
+                  <div className="border border-gray-300">
+                    <Image
+                      src="/images/default-car-image.png"
+                      alt="Car Image"
+                      width={200}
+                      height={200}
+                    />
+                  </div>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No cars found.</p>
+          )}
+        </div>
       </aside>
     </div>
   );
