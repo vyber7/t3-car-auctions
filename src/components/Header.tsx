@@ -141,7 +141,11 @@ function Header(): JSX.Element {
           </label>
           <input type="checkbox" id="checkbox" className="peer hidden" />
 
-          <div className="absolute right-full top-0 flex h-screen w-3/4 flex-col rounded-r-lg border-2 border-black bg-green-200 p-2 transition-all peer-checked:right-1/4 peer-checked:top-0 md:w-1/3 md:peer-checked:right-2/3 lg:static lg:flex lg:w-auto lg:justify-end lg:gap-2 lg:peer-checked:static lg:peer-checked:flex">
+          <div
+            className="absolute right-full top-0 flex h-screen w-3/4 flex-col rounded-r-lg border-2 border-black bg-green-200 p-2 transition-all peer-checked:right-1/4 peer-checked:top-0 
+                          md:w-1/3 md:peer-checked:right-2/3 lg:static 
+                          lg:h-auto lg:w-full lg:flex-row lg:justify-end lg:border-none lg:bg-transparent lg:p-0"
+          >
             {user && (
               <div>
                 <label htmlFor="profile-box" className="flex gap-2 ">
@@ -152,7 +156,7 @@ function Header(): JSX.Element {
                     height={28}
                     alt="profile image"
                   />
-                  <span className=" p-1 align-text-bottom text-sm font-bold text-green-600 ">
+                  <span className="p-1 align-text-bottom text-sm font-bold text-green-600 ">
                     {user.email}
                   </span>
                 </label>
@@ -168,7 +172,7 @@ function Header(): JSX.Element {
                 ))}
               </div>
             )}
-            <div>
+            <div className="lg:flex lg:gap-1">
               {user && <hr className="mb-2 mt-2 border-green-900" />}
               {navLinks.map((link) => (
                 <Link
@@ -179,23 +183,23 @@ function Header(): JSX.Element {
                   {link.name}
                 </Link>
               ))}
-            </div>
 
-            {!user ? (
-              <button
-                className="block w-full bg-green-200 p-2 text-left text-sm font-bold text-green-600 transition hover:bg-green-400 hover:text-green-100 lg:inline-block lg:w-32 lg:rounded lg:p-1 lg:text-center"
-                onClick={() => void signIn()}
-              >
-                Sign in
-              </button>
-            ) : (
-              <button
-                className="block w-full bg-green-200 p-2 text-left text-sm font-bold text-green-600 transition hover:bg-green-400 hover:text-green-100 lg:inline-block lg:w-32 lg:rounded lg:p-1 lg:text-center"
-                onClick={() => void signOut()}
-              >
-                Sign Out
-              </button>
-            )}
+              {!user ? (
+                <button
+                  className="block w-full bg-green-200 p-2 text-left text-sm font-bold text-green-600 transition hover:bg-green-400 hover:text-green-100 lg:inline-block lg:w-32 lg:rounded lg:p-1 lg:text-center"
+                  onClick={() => void signIn()}
+                >
+                  Sign in
+                </button>
+              ) : (
+                <button
+                  className="block w-full bg-green-200 p-2 text-left text-sm font-bold text-green-600 transition hover:bg-green-400 hover:text-green-100 lg:inline-block lg:w-32 lg:rounded lg:p-1 lg:text-center"
+                  onClick={() => void signOut()}
+                >
+                  Sign Out
+                </button>
+              )}
+            </div>
           </div>
         </nav>
       </div>
