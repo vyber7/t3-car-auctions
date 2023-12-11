@@ -147,8 +147,8 @@ function Header(): JSX.Element {
                           lg:h-auto lg:w-full lg:flex-row lg:justify-end lg:border-none lg:bg-transparent lg:p-0"
           >
             {user && (
-              <div>
-                <label htmlFor="profile-box" className="flex gap-2 ">
+              <div className="lg:order-2">
+                <label htmlFor="profile-box" className="peer flex gap-2">
                   <Image
                     className="profile-image rounded-md object-cover"
                     src={userImg}
@@ -156,24 +156,26 @@ function Header(): JSX.Element {
                     height={28}
                     alt="profile image"
                   />
-                  <span className="p-1 align-text-bottom text-sm font-bold text-green-600 ">
+                  <span className="p-1 align-text-bottom text-sm font-bold text-green-600 lg:text-green-200">
                     {user.email}
                   </span>
                 </label>
-                <hr className="mb-2 mt-3 border-green-900" />
-                {profileLinks.map((link) => (
-                  <Link
-                    href={link.href as Url}
-                    key={link.name}
-                    className="block w-full rounded bg-green-200 p-2 text-left text-sm font-bold text-green-600 transition hover:bg-green-400 hover:text-green-100 lg:inline-block lg:w-32 lg:rounded lg:p-1 lg:text-center"
-                  >
-                    {link.name}
-                  </Link>
-                ))}
+                <hr className="mb-2 mt-3 border-green-900 lg:hidden" />
+                <div className="lg:fixed lg:hidden lg:peer-hover:block">
+                  {profileLinks.map((link) => (
+                    <Link
+                      href={link.href as Url}
+                      key={link.name}
+                      className="block w-full rounded bg-green-200 p-2 text-left text-sm font-bold text-green-600 transition hover:bg-green-400 hover:text-green-100 lg:w-32 lg:rounded lg:p-1 lg:text-center"
+                    >
+                      {link.name}
+                    </Link>
+                  ))}
+                </div>
               </div>
             )}
             <div className="lg:flex lg:gap-1">
-              {user && <hr className="mb-2 mt-2 border-green-900" />}
+              {user && <hr className="mb-2 mt-2 border-green-900 lg:hidden" />}
               {navLinks.map((link) => (
                 <Link
                   href={link.href as Url}
@@ -193,7 +195,7 @@ function Header(): JSX.Element {
                 </button>
               ) : (
                 <button
-                  className="block w-full bg-green-200 p-2 text-left text-sm font-bold text-green-600 transition hover:bg-green-400 hover:text-green-100 lg:inline-block lg:w-32 lg:rounded lg:p-1 lg:text-center"
+                  className="block w-full bg-green-200 p-2 text-left text-sm font-bold text-green-600 transition hover:bg-green-400 hover:text-green-100 lg:hidden lg:w-32 lg:rounded lg:p-1 lg:text-center"
                   onClick={() => void signOut()}
                 >
                   Sign Out
