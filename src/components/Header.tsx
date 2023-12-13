@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useEffect, useRef } from "react";
 import type { Url } from "next/dist/shared/lib/router/router";
+import { RiHome2Line } from "react-icons/ri";
 
 function Header(): JSX.Element {
   const { data: session } = useSession();
@@ -12,7 +13,7 @@ function Header(): JSX.Element {
     "/images/default-profile-picture-avatar-png-green.png";
   const label = useRef<HTMLLabelElement>(null);
   // Set up ref for nav bar
-  const header = useRef<HTMLDivElement>(null);
+  const profileLabel = useRef<HTMLLabelElement>(null);
 
   useEffect(() => {
     /**
@@ -26,6 +27,16 @@ function Header(): JSX.Element {
           "checkbox"
         ) as HTMLInputElement;
         if (checkbox?.checked) label.current.click();
+      }
+
+      if (
+        profileLabel.current &&
+        !profileLabel.current.contains(event.target as Node)
+      ) {
+        const checkbox = document.getElementById(
+          "profile-box"
+        ) as HTMLInputElement;
+        if (checkbox?.checked) profileLabel.current.click();
       }
     }
 
@@ -129,10 +140,7 @@ function Header(): JSX.Element {
   };*/
 
   return (
-    <div
-      ref={header}
-      className="fixed left-0 top-0 z-50 w-full bg-green-600 p-2"
-    >
+    <div className="fixed left-0 top-0 z-50 w-full bg-green-600 p-2">
       <div className="m-auto max-w-5xl">
         {/*<Image src="/images/logo.jpg" alt="Logo" width={70} height={50} />*/}
         <nav id="" className="flex justify-between">
@@ -146,41 +154,59 @@ function Header(): JSX.Element {
                           md:w-1/3 md:peer-checked:right-2/3 lg:static 
                           lg:h-auto lg:w-full lg:flex-row lg:justify-end lg:border-none lg:bg-transparent lg:p-0"
           >
-            {user && (
-              <div className="lg:order-2">
-                <label htmlFor="profile-box" className="peer flex gap-2">
-                  <Image
-                    className="profile-image rounded-md object-cover"
-                    src={userImg}
-                    width={28}
-                    height={28}
-                    alt="profile image"
-                  />
-                  <span className="p-1 align-text-bottom text-sm font-bold text-green-600 lg:text-green-200">
-                    {user.email}
-                  </span>
-                </label>
-                <hr className="mb-2 mt-3 border-green-900 lg:hidden" />
-                <div className="lg:fixed lg:hidden lg:peer-hover:block">
-                  {profileLinks.map((link) => (
-                    <Link
-                      href={link.href as Url}
-                      key={link.name}
-                      className="block w-full rounded bg-green-200 p-2 text-left text-sm font-bold text-green-600 transition hover:bg-green-400 hover:text-green-100 lg:w-32 lg:rounded lg:p-1 lg:text-center"
-                    >
-                      {link.name}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
             <div className="lg:flex lg:gap-1">
+              {user && (
+                <div className="relative lg:order-2">
+                  <label
+                    ref={profileLabel}
+                    htmlFor="profile-box"
+                    className="peer flex gap-2 hover:cursor-pointer"
+                  >
+                    <Image
+                      className="profile-image rounded-md object-cover"
+                      src={userImg}
+                      width={28}
+                      height={28}
+                      alt="profile image"
+                    />
+                    <span className="p-1 align-text-bottom text-sm font-bold text-green-600 lg:text-green-200">
+                      {user.email}
+                    </span>
+                  </label>
+                  <input
+                    type="checkbox"
+                    id="profile-box"
+                    className="peer hidden"
+                  />
+                  <hr className="mb-2 mt-3 border-green-900 lg:hidden" />
+                  <div className="lg:absolute lg:right-0 lg:top-9 lg:hidden lg:w-full lg:bg-green-200 lg:peer-checked:block">
+                    {profileLinks.map((link) => (
+                      <Link
+                        href={link.href as Url}
+                        key={link.name}
+                        className="block w-full rounded bg-green-200 p-2 text-left text-sm font-bold text-green-600 transition hover:bg-green-400 hover:text-green-100 lg:w-full lg:rounded-none lg:text-center"
+                      >
+                        {link.name}
+                      </Link>
+                    ))}
+                    <button
+                      className="hidden w-full bg-green-200 p-2 text-left text-sm font-bold text-green-600 transition hover:bg-green-400 hover:text-green-100 lg:block lg:w-full lg:rounded-none lg:border-t lg:border-green-900 lg:p-1 lg:text-center"
+                      onClick={() => void signOut()}
+                    >
+                      Sign Out
+                    </button>
+                  </div>
+                </div>
+              )}
               {user && <hr className="mb-2 mt-2 border-green-900 lg:hidden" />}
+              <Link href="/">
+                <RiHome2Line className="hidden text-2xl text-green-200 transition hover:text-green-100 lg:inline-block lg:text-center" />
+              </Link>
               {navLinks.map((link) => (
                 <Link
                   href={link.href as Url}
                   key={link.name}
-                  className="block w-full rounded bg-green-200 p-2 text-left text-sm font-bold text-green-600 transition hover:bg-green-400 hover:text-green-100 lg:inline-block lg:w-32 lg:rounded lg:p-1 lg:text-center"
+                  className="block w-full rounded bg-green-200 p-2 text-left text-sm font-bold text-green-600 transition hover:bg-green-400 hover:text-green-100 lg:inline-block lg:w-32 lg:p-1 lg:text-center"
                 >
                   {link.name}
                 </Link>
@@ -188,14 +214,14 @@ function Header(): JSX.Element {
 
               {!user ? (
                 <button
-                  className="block w-full bg-green-200 p-2 text-left text-sm font-bold text-green-600 transition hover:bg-green-400 hover:text-green-100 lg:inline-block lg:w-32 lg:rounded lg:p-1 lg:text-center"
+                  className="block w-full rounded bg-green-200 p-2 text-left text-sm font-bold text-green-600 transition hover:bg-green-400 hover:text-green-100 lg:inline-block lg:w-32 lg:p-1 lg:text-center"
                   onClick={() => void signIn()}
                 >
                   Sign in
                 </button>
               ) : (
                 <button
-                  className="block w-full bg-green-200 p-2 text-left text-sm font-bold text-green-600 transition hover:bg-green-400 hover:text-green-100 lg:hidden lg:w-32 lg:rounded lg:p-1 lg:text-center"
+                  className="block w-full rounded bg-green-200 p-2 text-left text-sm font-bold text-green-600 transition hover:bg-green-400 hover:text-green-100 lg:hidden"
                   onClick={() => void signOut()}
                 >
                   Sign Out

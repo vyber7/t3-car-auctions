@@ -104,7 +104,7 @@ export default function Home(): JSX.Element {
         <link rel="icon" href="/images/logo.png" />
       </Head>
 
-      <main className="w-full md:w-4/5 lg:w-10/12">
+      <main className="w-full px-2 md:w-4/5 md:pr-0 lg:w-10/12 lg:pl-0">
         <h2 className="pt-5 text-lg font-semibold">Featured Auctions</h2>
         <div>
           {cars.data ? (
@@ -145,7 +145,7 @@ export default function Home(): JSX.Element {
           )}
         </div>
       </main>
-      <aside className="hidden md:block md:w-1/5 lg:w-2/12">
+      <aside className="hidden md:block md:w-1/5 md:pr-2 lg:w-2/12 lg:pr-0">
         <h2 className="pt-5 text-lg font-semibold">Current Auctions</h2>
         <div className="current_auctions">
           {cars.data ? (
