@@ -84,9 +84,10 @@ function AuthShowcase() {
 */
 
 import Head from "next/head";
-
+//import Link from "next/link";
 import Image from "next/image";
 import { api } from "~/utils/api";
+import VehicleListing from "~/components/VehicleListing";
 
 /**
  * This is a home page.
@@ -94,8 +95,8 @@ import { api } from "~/utils/api";
  */
 
 export default function Home(): JSX.Element {
-  const cars = api.example.getVehicles.useQuery();
-  console.log(cars.data);
+  const vehicles = api.example.getVehicles.useQuery();
+  console.log(vehicles.data);
   return (
     <div className="m-auto mt-11 flex max-w-5xl gap-5">
       <Head>
@@ -107,36 +108,11 @@ export default function Home(): JSX.Element {
       <main className="w-full px-2 md:w-4/5 md:pr-0 lg:w-10/12 lg:pl-0">
         <h2 className="pt-5 text-lg font-semibold">Featured Auctions</h2>
         <div>
-          {cars.data ? (
+          {vehicles.data ? (
             <ul className="flex flex-col gap-5 py-5">
-              {cars.data.map((car) => (
-                <li className="" key={car.id}>
-                  <div className="group flex flex-col flex-wrap rounded border transition-all hover:border-gray-600 lg:flex-row">
-                    <h3 className="w-full p-2 text-center text-xl font-bold">
-                      {car.year} {car.make} {car.model}
-                    </h3>
-                    <div className="flex w-auto flex-col justify-between rounded-t lg:w-1/3 lg:rounded-l">
-                      <Image
-                        src="/images/default-car-image.png"
-                        alt="Car Image"
-                        width={400}
-                        height={200}
-                        className="w-auto rounded-t lg:rounded-t-none lg:rounded-tl"
-                      />
-                      <p className="flex justify-between p-2">
-                        <span>{car.miles} miles</span>
-                        <span>${car.price}</span>
-                      </p>
-                    </div>
-                    <div className="relative px-3 pb-8 lg:w-2/3">
-                      <p className="relative h-36 overflow-hidden after:absolute after:bottom-0 after:left-0 after:h-20 after:w-full after:bg-gradient-to-t after:from-white ">
-                        {car.description}
-                      </p>
-                      <button className="z-1 absolute bottom-2 right-1/2 translate-x-1/2 rounded bg-black px-2 text-white">
-                        Read more...
-                      </button>
-                    </div>
-                  </div>
+              {vehicles.data.map((vehicle) => (
+                <li className="" key={vehicle.id}>
+                  <VehicleListing vehicle={vehicle} />
                 </li>
               ))}
             </ul>
@@ -148,10 +124,10 @@ export default function Home(): JSX.Element {
       <aside className="hidden md:block md:w-1/5 md:pr-2 lg:w-2/12 lg:pr-0">
         <h2 className="pt-5 text-lg font-semibold">Current Auctions</h2>
         <div className="current_auctions">
-          {cars.data ? (
+          {vehicles.data ? (
             <ul className="flex flex-wrap gap-5 py-5">
-              {cars.data.map((car) => (
-                <li className="w-full" key={car.id}>
+              {vehicles.data.map((vehicle) => (
+                <li className="w-full" key={vehicle.id}>
                   <div className="border border-gray-300">
                     <Image
                       src="/images/default-car-image.png"

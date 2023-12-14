@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useEffect, useRef } from "react";
 import type { Url } from "next/dist/shared/lib/router/router";
-import { RiHome2Line } from "react-icons/ri";
+import { RiHome2Fill } from "react-icons/ri";
 
 function Header(): JSX.Element {
   const { data: session } = useSession();
@@ -200,7 +200,7 @@ function Header(): JSX.Element {
               )}
               {user && <hr className="mb-2 mt-2 border-green-900 lg:hidden" />}
               <Link href="/">
-                <RiHome2Line className="hidden text-2xl text-green-200 transition hover:text-green-100 lg:inline-block lg:text-center" />
+                <RiHome2Fill className="hidden text-2xl text-green-200 transition hover:text-green-100 lg:inline-block lg:text-center" />
               </Link>
               {navLinks.map((link) => (
                 <Link
