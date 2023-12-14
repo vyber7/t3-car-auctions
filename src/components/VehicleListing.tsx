@@ -1,6 +1,5 @@
 import Image from "next/image";
-//import { useRouter } from "next/router";
-//import { useEffect } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 
 interface Vehicle {
@@ -13,20 +12,12 @@ interface Vehicle {
   description: string;
 }
 
-function Listing({ vehicle }: { vehicle: Vehicle }) {
-  /*const router = useRouter();
-  useEffect(() => {
-    const handleClick = () => {
-      router.push({
-        pathname: "/listing",
-        query: { id: vehicle.id },
-      });
-    };
-  }, [vehicle.id, router]);*/
+function VehicleListing({ vehicle }: { vehicle: Vehicle }) {
+  const router = useRouter();
 
   return (
     <div className="group flex flex-col flex-wrap rounded border transition-all hover:border-gray-600 lg:flex-row">
-      <Link href={`/listing/${vehicle.id}`}>
+      <Link className="w-full" href={`/listing/${vehicle.id}`}>
         <h3
           className="w-full p-2 text-center text-xl font-bold"
           /*onClick={handleClick}*/
@@ -35,14 +26,16 @@ function Listing({ vehicle }: { vehicle: Vehicle }) {
         </h3>
       </Link>
 
-      <div className="flex w-auto flex-col justify-between rounded-t lg:w-1/3 lg:rounded-l">
-        <Image
-          src="/images/default-vehicle-image.png"
-          alt="Vehicle Image"
-          width={400}
-          height={200}
-          className="w-auto rounded-t lg:rounded-t-none lg:rounded-tl"
-        />
+      <div className="flex flex-col justify-between rounded-t lg:w-1/3 lg:rounded-l">
+        <Link className="w-full" href={`/listing/${vehicle.id}`}>
+          <Image
+            src="/images/default-vehicle-image.png"
+            alt="Vehicle Image"
+            width={400}
+            height={200}
+            className="w-full rounded-t object-cover lg:rounded-t-none lg:rounded-tl"
+          />
+        </Link>
         <p className="flex justify-between p-2">
           <span>{vehicle.miles} miles</span>
           <span>${vehicle.price}</span>
@@ -52,7 +45,10 @@ function Listing({ vehicle }: { vehicle: Vehicle }) {
         <p className="relative h-36 overflow-hidden after:absolute after:bottom-0 after:left-0 after:h-20 after:w-full after:bg-gradient-to-t after:from-white ">
           {vehicle.description}
         </p>
-        <button className="z-1 absolute bottom-2 right-1/2 translate-x-1/2 rounded bg-black px-2 text-white">
+        <button
+          className="z-1 absolute bottom-2 right-1/2 translate-x-1/2 rounded bg-black px-2 text-white"
+          onClick={() => void router.push(`/listing/${vehicle.id}`)}
+        >
           Read more...
         </button>
       </div>
@@ -60,4 +56,4 @@ function Listing({ vehicle }: { vehicle: Vehicle }) {
   );
 }
 
-export default Listing;
+export default VehicleListing;

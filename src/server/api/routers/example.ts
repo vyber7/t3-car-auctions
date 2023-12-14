@@ -25,4 +25,14 @@ export const exampleRouter = createTRPCRouter({
   getVehicles: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.vehicle.findMany();
   }),
+
+  getVehicle: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(({ input, ctx }) => {
+      return ctx.prisma.vehicle.findUnique({
+        where: {
+          id: input.id,
+        },
+      });
+    }),
 });
