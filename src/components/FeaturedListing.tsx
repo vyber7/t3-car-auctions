@@ -12,7 +12,7 @@ interface Vehicle {
   description: string;
 }
 
-function VehicleListing({ vehicle }: { vehicle: Vehicle }) {
+function FeaturedListing({ vehicle }: { vehicle: Vehicle }) {
   const router = useRouter();
 
   return (
@@ -56,4 +56,4 @@ function VehicleListing({ vehicle }: { vehicle: Vehicle }) {
   );
 }
 
-export default VehicleListing;
+export default FeaturedListing;

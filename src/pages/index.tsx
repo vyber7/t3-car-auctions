@@ -84,10 +84,8 @@ function AuthShowcase() {
 */
 
 import Head from "next/head";
-//import Link from "next/link";
-import Image from "next/image";
-import { api } from "~/utils/api";
-import VehicleListing from "~/components/VehicleListing";
+import SideBarAuctions from "~/components/SideBarAuctions";
+import FeaturedAuctions from "~/components/FeaturedAuctions";
 
 /**
  * This is a home page.
@@ -95,8 +93,6 @@ import VehicleListing from "~/components/VehicleListing";
  */
 
 export default function Home(): JSX.Element {
-  const vehicles = api.example.getVehicles.useQuery();
-  console.log(vehicles.data);
   return (
     <div className="m-auto mt-11 flex max-w-5xl gap-5">
       <Head>
@@ -105,45 +101,8 @@ export default function Home(): JSX.Element {
         <link rel="icon" href="/images/logo.png" />
       </Head>
 
-      <main className="w-full px-2 md:w-4/5 md:pr-0 lg:w-10/12 lg:pl-0">
-        <h2 className="pt-5 text-lg font-semibold">Featured Auctions</h2>
-        <div>
-          {vehicles.data ? (
-            <ul className="flex flex-col gap-5 py-5">
-              {vehicles.data.map((vehicle) => (
-                <li className="" key={vehicle.id}>
-                  <VehicleListing vehicle={vehicle} />
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No cars found.</p>
-          )}
-        </div>
-      </main>
-      <aside className="hidden md:block md:w-1/5 md:pr-2 lg:w-2/12 lg:pr-0">
-        <h2 className="pt-5 text-lg font-semibold">Current Auctions</h2>
-        <div className="current_auctions">
-          {vehicles.data ? (
-            <ul className="flex flex-wrap gap-5 py-5">
-              {vehicles.data.map((vehicle) => (
-                <li className="w-full" key={vehicle.id}>
-                  <div className="border border-gray-300">
-                    <Image
-                      src="/images/default-car-image.png"
-                      alt="Car Image"
-                      width={300}
-                      height={200}
-                    />
-                  </div>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No cars found.</p>
-          )}
-        </div>
-      </aside>
+      <FeaturedAuctions />
+      <SideBarAuctions />
     </div>
   );
 }
